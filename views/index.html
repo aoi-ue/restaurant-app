@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Restaurant Picker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h1>Restaurant Picker</h1>
+
+    <form hx-post="/add-choices" hx-target="#restaurant-list">
+        <label for="restaurant">Add a restaurant:</label>
+        <input type="text" id="restaurant" name="restaurant" required>
+        <button type="submit">Add</button>
+    </form>
+
+    <div id="restaurant-list">
+        <ul id="restaurant-list">
+
+        </ul>
+        <!-- Display the list of added restaurants here -->
+    </div>
+
+    <button hx-get="/get-random-choices" hx-target="#random-choice">
+        Get Random Choice
+    </button>
+
+    <div id="random-choice">
+        <!-- Display the randomly chosen restaurant here -->
+    </div>
+
+    <script src="https://unpkg.com/htmx.org@1.9.6"
+        integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
