@@ -1,2 +1,3 @@
-# resturant_app
-simple resturant app 
+# restaurant_app
+
+simple restaurant app
