@@ -1,8 +1,8 @@
 package main
 
 import (
-	"log"
 	"net/http"
+	"os"
 	"restaurant-app/handlers"
 
 	"github.com/gin-gonic/gin"
@@ -22,6 +22,9 @@ func main() {
 	router.POST("/add-choices", handlers.AddChoices)
 	router.GET("/get-random-choices", handlers.GetRandomChoices)
 
-	log.Fatal(http.ListenAndServe(":8080", router))
-
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080" // Default port if not specified
+	}
+	router.Run(":" + port)
 }
