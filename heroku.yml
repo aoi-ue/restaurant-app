@@ -3,4 +3,4 @@ build:
         web: Dockerfile
 
 run:
-    web: ./restaurant_app
+    web: ./main
