@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"restaurant-app/handlers"
 
@@ -8,6 +9,7 @@ import (
 )
 
 func main() {
+
 	router := gin.Default()
 
 	router.LoadHTMLGlob("views/*")
@@ -20,5 +22,6 @@ func main() {
 	router.POST("/add-choices", handlers.AddChoices)
 	router.GET("/get-random-choices", handlers.GetRandomChoices)
 
-	router.Run("127.0.0.1:8080")
+	log.Fatal(http.ListenAndServe(":8080", router))
+
 }
