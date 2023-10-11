@@ -1,15 +1,13 @@
-#build stage
-FROM golang:alpine AS builder
-RUN apk add --no-cache git
-WORKDIR /go/src/app
-COPY . .
-RUN go get -d -v ./...
-RUN go build -o main
+FROM golang:1.14.9-alpine AS builder
+RUN mkdir /build
+ADD go.mod go.sum main.go /build/
+WORKDIR /build
+RUN go build
 
-#final stage
-FROM alpine:latest
-RUN apk --no-cache add ca-certificates
-COPY --from=builder /go/bin/app /app
-ENTRYPOINT /app
-LABEL Name=restaurantapp Version=0.0.1
-EXPOSE 8080
+FROM alpine
+RUN adduser -S -D -H -h /app appuser
+USER appuser
+COPY --from=builder /build/restaurantapp /app/
+COPY views/ /app/views
+WORKDIR /app
+CMD ["./restaurantapp"]
