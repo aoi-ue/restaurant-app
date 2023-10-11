@@ -1,13 +1,20 @@
-FROM golang:1.14.9-alpine AS builder
-RUN mkdir /build
-ADD go.mod go.sum main.go /build/
-WORKDIR /build
-RUN go build
+# Use an official Golang runtime as a parent image
+FROM golang:latest
 
-FROM alpine
-RUN adduser -S -D -H -h /app appuser
-USER appuser
-COPY --from=builder /build/restaurantapp /app/
-COPY views/ /app/views
+# Set the working directory to /app
 WORKDIR /app
-CMD ["./restaurantapp"]
+
+# Copy the current directory contents into the container at /app
+COPY . /app
+
+# Download and install any required dependencies
+RUN go mod download
+
+# Build the Go app
+RUN go build -o main .
+
+# Expose port 8080 for incoming traffic
+EXPOSE 8080
+
+# Define the command to run the app when the container starts
+CMD ["/app/main"]
